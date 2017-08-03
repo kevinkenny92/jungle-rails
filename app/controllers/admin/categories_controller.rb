@@ -1,7 +1,7 @@
 ##ADMIN SEC##
 class Admin::CategoriesController < ApplicationController
 
-  http_basic_authenticate_with name: ENV['jungle'], password: ENV['book']
+ http_basic_authenticate_with name: ENV['admin_name'], password: ENV['admin_password']
 
   def index
     @category = Category.all
