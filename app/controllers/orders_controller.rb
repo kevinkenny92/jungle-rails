@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
+      UserMailer.send_email(order).deliver_now
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, error: order.errors.full_messages.first
@@ -22,7 +23,6 @@ class OrdersController < ApplicationController
   private
 
   def empty_cart!
-    # empty hash means no products in cart :)
     update_cart({})
   end
 
@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
     order
   end
 
-  # returns total in cents not dollars (stripe uses cents as well)
+
   def cart_total
     total = 0
     cart.each do |product_id, details|

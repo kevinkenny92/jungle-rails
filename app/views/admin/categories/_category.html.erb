@@ -1,8 +1,10 @@
 <tr>
+
   <td>
-    <h4><%= category.name %></h4>
+    <%= category.name %>
   </td>
+
   <td>
-    <%= Product.where(category_id: category.id).count %>
+    <%= link_to fa_icon('trash'), [:admin, category], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Confirm Delete ?" } %>
   </td>
 </tr>

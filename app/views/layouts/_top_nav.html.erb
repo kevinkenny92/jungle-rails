@@ -48,7 +48,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
-          <li>Signed in as <%= current_user.first %></li>
+          <li>Signed in as <%= current_user.firstname %></li>
           <li><%= link_to "Logout", "/logout", :method => :delete %></li>
         <% else %>
           <li><%= link_to 'Login', '/login' %></li>
