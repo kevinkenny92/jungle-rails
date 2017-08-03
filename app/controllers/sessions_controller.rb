@@ -1,8 +1,5 @@
 class SessionsController < ApplicationController
 
-  def new
-  end
-
   def create
     user = User.find_by_email(params[:email])
 
@@ -16,9 +13,8 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to '/login'    #If credentials invalid, reroutes to login#
+    redirect_to '/login'      #If credentials invalid, reroutes to login#
   end
 
 end
-
 
