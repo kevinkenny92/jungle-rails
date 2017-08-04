@@ -19,6 +19,7 @@
         <% cart.each do |product_id, details| %>
           <%= render 'item', product_id: product_id, details: details %>
         <% end %>
+
       </tbody>
       <tfoot>
         <tr>
@@ -36,6 +37,12 @@
   <div class="row">
     <div class="col-xs-12">
       <%= form_tag orders_path do %>
+
+      <% if @cart_total = 0 %>
+        <h3>Cart Empty</h3>
+        <%= link_to 'Back', :root %> <!--Redirects to the Home Page -->
+      <% else %>
+
         <script
           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
@@ -46,6 +53,8 @@
           data-email="kvirani@gmail.com"
           data-currency="cad">
         </script>
+      <% end %>
+
       <% end %>
     </div>
   </div>
