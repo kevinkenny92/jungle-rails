@@ -98,13 +98,12 @@ main section.products-show {
     margin: 10px 0;
 
     .rating-by-user {
-     font-weight: 600;
-     margin-bottom: 5px;
+      font-weight: 600;
+      margin-bottom: 5px;
 
-      a {
-         font-weight: 200;
-         font-style: oblique;
-       }
-     }
-   }
+      em {
+        font-style: oblique;
+      }
+    }
+  }
 

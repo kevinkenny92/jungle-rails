@@ -5,6 +5,6 @@ class Review < ActiveRecord::Base
   # validate :
  validates :product, presence: true
  validates :user, presence: true
- validates :description, presence: true
  validates :rating, presence: true
+ validates :description, presence: true
 end
