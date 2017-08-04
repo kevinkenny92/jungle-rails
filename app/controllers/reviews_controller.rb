@@ -4,13 +4,16 @@ class ReviewsController < ApplicationController
     # raise "Yay, I'm here!"
     @review = Review.new(review_params)
     @review.user = current_user
-    @rewiew.product_id = [product_id: product.id]
+
+    puts @product.id
+    @review.product_id = Product.find params[@product.id]
+    puts @review.product_id
 
     if @review.save
-      redirect_to [:product],
+     redirect_to product_path,
       notice: 'Review created sucessfully!'
     else
-      render root_path
+      redirect_to '/'
     end
   end
 

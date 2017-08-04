@@ -25,7 +25,20 @@
         </dl>
       </div>
 
-       <div class="row">
+      <% if @review.present? %>
+        <div class="review col-sm-12">
+          <h5 class="rating-by-user">
+            There are no current reviews for this item...
+          </h5>
+          <p>
+            <%= link_to 'Be the first to write one!', '#write_review' %>
+          </p>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div id="write_review" class="row">
       <%= form_for [@product, @review] do |form| %>
 
         <% if form.object.errors.any? %>
@@ -39,7 +52,7 @@
           </div>
         <% end %>
 
-       <div class="form-group">
+        <div class="form-group">
           <%= form.label :rating %>
           <%= form.select :rating, options_for_select(1..5), { include_blank: true }, class: 'form-control' %>
         </div>
