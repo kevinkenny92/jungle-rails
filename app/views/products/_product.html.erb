@@ -13,18 +13,21 @@
     <% if product.reviews.length > 0 %>
       <% @ratings = [] %>
       <% product.reviews.each do |review| %>
-        <% @ratings.push(review.rating.to_i) %>
+        <% @ratings.push(review.rating.to_f) %>
       <% end %>
       <% @average = @ratings.sum / @ratings.size %>
-        Average rating: <%= @average %>/5
+        Average rating: <%= number_to_human(@average) %>/5
+        <em>(<%= pluralize @ratings.length, 'review' %>)</em>
     <% else %>
-      <em>There are currently no ratings for this item.</em>
+      <em>There are no reviews for this item yet.</em>
     <% end %>
   </p>
 
   <footer class="actions">
-    <%= link_to add_item_cart_path(product_id: product.id), class: 'btn btn-primary', method: :put do %>
-      <%= fa_icon "shopping-cart", text: 'Add' %>
+    <% if product.quantity > 0 %>
+      <%= link_to add_item_cart_path(product_id: product.id), class: 'btn btn-primary', method: :put do %>
+        <%= fa_icon "shopping-cart", text: 'Add' %>
+      <% end %>
     <% end %>
     <%= link_to product, class: 'btn btn-default pull-right' do %>
       Details &raquo;

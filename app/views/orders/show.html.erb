@@ -5,7 +5,14 @@
   </header>
 
   <div class="order-summary jumbotron">
-    <h4>Thank you for your order!</h4>
+    <h3>Thank you for your order!</h3>
+    <p>
+      <% if current_user && (current_user.email == @order.email) %>
+        A confirmation e-mail will be sent to <em><%= @order.email %></em> shortly. Below are
+      <% else %>
+        <%= link_to 'Click to print', '#', onclick: 'window.print()' %>
+      <% end %>
+      your order details:</p>
   </div>
 
   <div class="panel panel-default items">
@@ -19,16 +26,8 @@
         </tr>
       </thead>
       <tbody>
-        <% total = 0 %>
-        <% @order.line_items.each do |line_item| %>
-        <tr>
-          <th><%= image_tag Product.find(line_item.product_id).image.tiny %></th>
-          <th><%= Product.find(line_item.product_id).name %></th>
-          <th><%= Product.find(line_item.product_id).description %></th>
-          <th><%=line_item.quantity%></th>
-          <th><%=line_item.total_price_cents.to_f/100 %></th>
-          <% total = total + line_item.total_price_cents.to_f/100 %>
-        </tr>
+        <% @order.line_items.each do |product_id| %>
+          <%= render 'item', product_id: product_id %>
         <% end %>
       </tbody>
       <tfoot>
@@ -36,16 +35,13 @@
           <th colspan="4">
             TOTAL:
           </th>
-
           <th>
-          <%= total %>
+            <%= humanized_money_with_symbol @order.total_cents / 100.0 %>
           </th>
         </tr>
       </tfoot>
     </table>
   </div>
-
-
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
 

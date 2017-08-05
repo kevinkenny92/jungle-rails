@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
-      UserMailer.send_email(order).deliver_now
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, error: order.errors.full_messages.first
@@ -23,6 +22,7 @@ class OrdersController < ApplicationController
   private
 
   def empty_cart!
+    # empty hash means no products in cart :)
     update_cart({})
   end
 
@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
     Stripe::Charge.create(
       source:      params[:stripeToken],
       amount:      cart_total, # in cents
-      description: "Khurram Virani's Jungle Order",
+      description: "<%= current_user.first_name %> <%= current_user.last_name %>'s Jungle Order",
       currency:    'cad'
     )
   end
@@ -53,10 +53,15 @@ class OrdersController < ApplicationController
       end
     end
     order.save!
+    # if order.save
+      JungleMailer.confirmation_email(order).deliver_now
+    # else
+      # throw error
+    # end
     order
   end
 
-
+  # returns total in cents not dollars (stripe uses cents as well)
   def cart_total
     total = 0
     cart.each do |product_id, details|

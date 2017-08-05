@@ -1,10 +1,13 @@
 <% if review.user.present? %>
-  <div class="review col-sm-12">
-    <h5 class="rating-by-user">
+  <div class="panel panel-default review col-sm-12">
+    <div class="panel-heading rating-by-user">
       <%= review.rating %>/5 rating by <%= review.user.first_name %> on <%= review.try(:created_at).try(:strftime, '%B %d, %Y') %>
-    </h5>
-    <p>
+      <% if current_user.present? && review.user.id == current_user.id %>
+        <%= link_to fa_icon('trash'), [@product, review], class: 'review-delete btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
+      <% end %>
+    </div>
+    <div class="panel-body">
     <%= review.description %>
-    </p>
+    </div>
   </div>
 <% end %>

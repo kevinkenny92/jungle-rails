@@ -1,13 +1,42 @@
-class ProductsController < ApplicationController
+class Admin::ProductsController < ApplicationController
+
+  http_basic_authenticate_with :name => ENV['ADMIN_USERNAME'], :password => ENV['ADMIN_PASSWORD']
 
   def index
-    @products = Product.all.order(created_at: :desc)
+    @products = Product.order(id: :desc).all
   end
 
-  def show
-    @product = Product.find params[:id]
-    puts "PRODUCT REVIEWS: #{@product.reviews}"
-    @review = @product.reviews.build
+  def new
+    @product = Product.new
+  end
+
+  def destroy
+    @product = Product.find_by(id: params[:id])
+    @product.destroy
+    redirect_to :back, notice: 'Product deleted!'
+  end
+
+  def create
+    @product = Product.new(product_params)
+
+    if @product.save
+      redirect_to [:admin, :products], notice: 'Product created!'
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def product_params
+    params.require(:product).permit(
+      :name,
+      :description,
+      :category_id,
+      :quantity,
+      :image,
+      :price
+    )
   end
 
 end

@@ -1,10 +1,8 @@
 <tr>
-
-  <td>
-    <%= category.name %>
+  <td colspan="2">
+    <h4><%= category.name %></h4>
   </td>
-
   <td>
-    <%= link_to fa_icon('trash'), [:admin, category], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Confirm Delete ?" } %>
+    <%= pluralize category.products.size, 'product' %>
   </td>
 </tr>

@@ -71,7 +71,7 @@ cat1.products.create!({
   name:  'Russian Spy Shoes',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel5.jpg'),
-  quantity: 0,
+  quantity: 8,
   price: 1_225.00
 })
 
@@ -96,7 +96,7 @@ cat2.products.create!({
   name:  'Hotdog Slicer',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('electronics2.jpg'),
-  quantity: 3,
+  quantity: 2,
   price: 26.00
 })
 
@@ -104,7 +104,7 @@ cat2.products.create!({
   name:  'World\'s Largest Smartwatch',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('electronics3.jpg'),
-  quantity: 32,
+  quantity: 0,
   price: 2_026.29
 })
 
@@ -128,8 +128,16 @@ cat3.products.create!({
   name:  'Red Bookshelf',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('furniture3.jpg'),
-  quantity: 0,
+  quantity: 23,
   price: 2_483.75
+})
+
+## USER
+us1 = User.create!({
+  first_name: 'Bob',
+  last_name: 'Mob',
+  email: 'bob@example.com',
+  password_digest: 'test123'
 })
 
 ## REVIEWS
@@ -146,7 +154,7 @@ rev1 = Review.create!({
 
 rev2 = Review.create!({
   product_id: 1,
-  user_id: 2,
+  user_id: 1,
   description: Faker::Hipster.paragraph(2),
   rating: 3
 })
@@ -156,6 +164,13 @@ rev3 = Review.create!({
   user_id: 1,
   description: Faker::Hipster.paragraph(2),
   rating: 1
+})
+
+rev4 = Review.create!({
+  product_id: 11,
+  user_id: 1,
+  description: Faker::Hipster.paragraph(18),
+  rating: 3
 })
 
 puts "DONE!"
