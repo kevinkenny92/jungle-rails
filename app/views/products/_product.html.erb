@@ -8,9 +8,20 @@
   <p class="description">
     <%= product.description %>
   </p>
+
   <p class="average-rating">
-     <em>Average rating: /5</em>
+    <% if product.reviews.length > 0 %>
+      <% @ratings = [] %>
+      <% product.reviews.each do |review| %>
+        <% @ratings.push(review.rating.to_i) %>
+      <% end %>
+      <% @average = @ratings.sum / @ratings.size %>
+        Average rating: <%= @average %>/5
+    <% else %>
+      <em>There are currently no ratings for this item.</em>
+    <% end %>
   </p>
+
   <footer class="actions">
     <%= link_to add_item_cart_path(product_id: product.id), class: 'btn btn-primary', method: :put do %>
       <%= fa_icon "shopping-cart", text: 'Add' %>
@@ -20,13 +31,11 @@
     <% end %>
   </footer>
 
-
   <% if product.quantity == 0 %>
-    <aside class="sold">
-      <%='Sold Out' %>
+    <aside class="sold-out">
+      SOLD OUT!
     </aside>
   <% end %>
-
 
   <aside class="price">
     <%= humanized_money_with_symbol product.price %>

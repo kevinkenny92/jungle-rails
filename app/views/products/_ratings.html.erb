@@ -1,8 +1,10 @@
-<div class="review col-sm-12">
-  <h5 class="rating-by-user">
-    <%= @review.rating %>/5 rating by <em>username here</em> on <%= @review.created_at %>
-  </h5>
-  <p>
-    <%= @review.description %>
-  </p>
-</div>
+<% if review.user.present? %>
+  <div class="review col-sm-12">
+    <h5 class="rating-by-user">
+      <%= review.rating %>/5 rating by <%= review.user.first_name %> on <%= review.try(:created_at).try(:strftime, '%B %d, %Y') %>
+    </h5>
+    <p>
+    <%= review.description %>
+    </p>
+  </div>
+<% end %>

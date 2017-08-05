@@ -1,21 +1,20 @@
 class ReviewsController < ApplicationController
 
+  before_filter :authenticate_user
+
   def create
-    # raise "Yay, I'm here!"
     @review = Review.new(review_params)
-    @review.user = current_user
+    @review.user_id = current_user.id
+    @review.product_id = params[:product_id].to_s
 
-    puts @product.id
-    @review.product_id = Product.find params[@product.id]
-    puts @review.product_id
-
-    if @review.save
-     redirect_to product_path,
-      notice: 'Review created sucessfully!'
+    if @review.save!
+      redirect_to :products, url: params[:product_id].to_s
     else
-      redirect_to '/'
+      render 'ratings'
     end
   end
+
+  private
 
   def review_params
     params.require(:review).permit(
