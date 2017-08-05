@@ -1,8 +1,7 @@
-class User < ActiveRecord::Base
+class Category < ActiveRecord::Base
 
-  has_secure_password
-  has_many :reviews
+  has_many :products
 
-  validates_uniqueness_of :email
+  validates_uniqueness_of :name
 
 end
